@@ -1,0 +1,11 @@
+[package]
+name = "taches"
+version = "0.1.0"
+edition = "2024"
+
+# Module 7. Le cours ajoute ici serde, serde_json et tempfile ;
+# ils sont omis tant que l'éditeur de liens n'est pas installé.
+[dependencies]
+
+[lints.clippy]
+unwrap_used = "warn"

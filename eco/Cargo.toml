@@ -1,0 +1,83 @@
+[package]
+name = "eco"
+version = "0.1.0"
+edition = "2024"
+
+# Exemples qui dépendent de crates externes (modules 6, 13, 14, 15, 18, 19).
+# Chaque dépendance est optionnelle et chaque exemple déclare celles dont il a besoin :
+# on peut ainsi compiler un exemple seul, sans construire toutes les autres crates.
+#   cargo check -p eco --no-default-features --features tokio --bin m14_a_async
+# Sans option, tout est activé : `cargo check -p eco` compile l'ensemble.
+[dependencies]
+anyhow = { version = "1", optional = true }
+thiserror = { version = "2", optional = true }
+serde = { version = "1", features = ["derive"], optional = true }
+serde_json = { version = "1", optional = true }
+clap = { version = "4", features = ["derive", "env"], optional = true }
+tracing = { version = "0.1", optional = true }
+tracing-subscriber = { version = "0.3", features = ["env-filter"], optional = true }
+tokio = { version = "1", features = ["full"], optional = true }
+reqwest = { version = "0.13", features = ["json"], optional = true }
+rayon = { version = "1", optional = true }
+decrire_derive = { path = "../decrire_derive", optional = true }
+
+[dev-dependencies]
+criterion = "0.8"
+
+[features]
+default = [
+    "anyhow", "thiserror", "serde", "serde_json", "clap", "tracing",
+    "tracing-subscriber", "tokio", "reqwest", "rayon", "decrire_derive",
+]
+
+[[bin]]
+name = "m06_b_thiserror"
+required-features = ["thiserror"]
+
+[[bin]]
+name = "m06_c_anyhow"
+required-features = ["anyhow"]
+
+[[bin]]
+name = "m13_f_rayon"
+required-features = ["rayon"]
+
+[[bin]]
+name = "m14_a_async"
+required-features = ["tokio"]
+
+[[bin]]
+name = "m14_b_tcp"
+required-features = ["tokio"]
+
+[[bin]]
+name = "m14_c_select"
+required-features = ["tokio"]
+
+[[bin]]
+name = "m14_d_blocking"
+required-features = ["tokio"]
+
+[[bin]]
+name = "m15_a_serde"
+required-features = ["serde", "serde_json"]
+
+[[bin]]
+name = "m15_b_clap"
+required-features = ["clap"]
+
+[[bin]]
+name = "m15_c_tracing"
+required-features = ["tracing", "tracing-subscriber"]
+
+[[bin]]
+name = "m15_d_reqwest"
+required-features = ["reqwest", "serde", "tokio", "anyhow"]
+
+[[bin]]
+name = "m18_c_derive"
+required-features = ["decrire_derive"]
+
+[[bench]]
+name = "comptage"
+harness = false

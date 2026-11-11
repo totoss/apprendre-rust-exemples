@@ -1,0 +1,20 @@
+[package]
+name = "rp2040-zero"
+version = "0.1.0"
+edition = "2024"
+
+# Module 20 : firmware Embassy pour une carte Waveshare RP2040-Zero (ou un clone).
+# Projet à part : il se compile pour le microcontrôleur, pas pour le PC.
+[workspace]
+
+[dependencies]
+embassy-executor = "0.10"
+embassy-rp = { version = "0.10", features = ["rp2040", "time-driver", "critical-section-impl", "executor-thread"] }
+embassy-time = "0.5"
+cortex-m-rt = "0.7"
+panic-halt = "1"
+smart-leds = "0.4"
+
+[profile.release]
+opt-level = "s" # optimise la taille : la flash est comptée
+lto = true

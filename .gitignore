@@ -1,0 +1,7 @@
+# Fichiers de build de Cargo
+target/
+
+# Base SQLite créée par api-notes à l'exécution
+*.db
+*.db-shm
+*.db-wal

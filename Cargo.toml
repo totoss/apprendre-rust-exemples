@@ -1,0 +1,11 @@
+[workspace]
+resolver = "3"
+# base, taches, notes, nostd, ffi : aucune dépendance externe.
+# eco, api-notes, decrire_derive : dépendances externes (tokio, axum, sqlx, serde...),
+# qui exigent l'éditeur de liens pour leurs macros procédurales et leurs scripts de build.
+members = ["base", "taches", "notes", "nostd", "ffi", "eco", "api-notes", "decrire_derive"]
+# Sans --workspace, les commandes Cargo ne touchent que les crates sans dépendance externe.
+default-members = ["base", "taches", "notes", "nostd", "ffi"]
+# erreurs : extraits qui doivent échouer, compilés un par un par verifier.ps1.
+# rp2040-zero : firmware du module 20, projet à part compilé pour le microcontrôleur.
+exclude = ["erreurs", "rp2040-zero"]

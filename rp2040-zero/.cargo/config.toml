@@ -1,0 +1,7 @@
+[build]
+target = "thumbv6m-none-eabi" # Cortex-M0+, le cœur du RP2040
+
+[target.thumbv6m-none-eabi]
+# `cargo run --release` convertit le firmware en UF2 et le copie sur la carte,
+# qui doit être en mode BOOT (maintenir BOOT, appuyer sur RESET, relâcher).
+runner = "elf2uf2-rs -d"

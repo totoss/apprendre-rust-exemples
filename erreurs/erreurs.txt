@@ -1,0 +1,24 @@
+# Extraits qui doivent échouer (ou réussir) à la compilation, avec le code attendu.
+# Format : nom | code attendu (ou OK) | source sur une ligne, \n pour les sauts de ligne
+m01_affectation | E0384 | fn main() {\n    let x = 5;\n    x = 6;\n}
+m02_point_virgule | E0308 | fn aire(largeur: u32, hauteur: u32) -> u32 {\n    largeur * hauteur;\n}\nfn main() { aire(1, 2); }
+m02_melange_types | E0277 | fn main() {\n    let _x = 1 + 1.0;\n}
+m02_condition_entier | E0308 | fn main() {\n    if 0 { }\n}
+m03_move | E0382 | fn main() {\n    let s1 = String::from("bonjour");\n    let s2 = s1;\n    println!("{s1}");\n    let s3 = s2.clone();\n    println!("{s2} {s3}");\n}
+m03_vecteur | E0502 | fn main() {\n    let mut v = vec![1, 2, 3];\n    let premier = &v[0];\n    v.push(4);\n    println!("{premier}");\n}
+m03_pendante | E0106 | fn pendante() -> &String {\n    let s = String::from("oups");\n    &s\n}\nfn main() { pendante(); }
+m03_deux_mut | E0499 | fn main() {\n    let mut s = String::from("a");\n    let r1 = &mut s;\n    let r2 = &mut s;\n    r1.push('b');\n    r2.push('c');\n}
+m03_exo_a | E0382 | fn main() {\n    let a = vec![1, 2, 3];\n    let b = a;\n    println!("{}", a.len());\n    let _ = b;\n}
+m03_exo_b | OK | fn main() {\n    let x = 10;\n    let y = x;\n    println!("{x} {y}");\n}
+m03_exo_c | E0502 | fn main() {\n    let mut s = String::from("hi");\n    let r = &s;\n    s.push('!');\n    println!("{r}");\n}
+m03_exo_d | OK | fn main() {\n    let mut s = String::from("hi");\n    let r = &s;\n    println!("{r}");\n    s.push('!');\n}
+m03_for_consomme | E0382 | fn main() {\n    let v = vec![1, 2, 3];\n    for x in v { println!("{x}"); }\n    println!("{}", v.len());\n}
+m04_debug_absent | E0277 | struct Point { x: i32 }\nfn main() {\n    let p = Point { x: 1 };\n    println!("{p:?} {}", p.x);\n}
+m04_match_incomplet | E0004 | enum Feu { Vert, Orange, Rouge }\nfn main() {\n    let f = Feu::Vert;\n    let _n = match f { Feu::Vert => 1, Feu::Orange => 2 };\n    let _ = Feu::Rouge;\n}
+m05_index_chaine | E0277 | fn main() {\n    let s = String::from("été");\n    let _c = s[0];\n}
+m05_modifier_en_parcourant | E0502 | fn main() {\n    let mut v = vec![1, 2, 3];\n    for x in &v { v.push(*x); }\n}
+m08_borne_absente | E0277 | fn afficher<T: std::fmt::Display>(_t: T) {}\nstruct S;\nfn main() { afficher(S); }
+m09_sans_annotation | E0106 | fn plus_longue(a: &str, b: &str) -> &str {\n    if a.len() >= b.len() { a } else { b }\n}\nfn main() { plus_longue("a", "b"); }
+m09_trop_courte | E0597 | fn plus_longue<'a>(a: &'a str, b: &'a str) -> &'a str {\n    if a.len() >= b.len() { a } else { b }\n}\nfn main() {\n    let titre = String::from("ownership");\n    let resultat;\n    {\n        let court = String::from("move");\n        resultat = plus_longue(&titre, &court);\n    }\n    println!("{resultat}");\n}
+m11_collect_sans_type | E0282,E0283 | fn main() {\n    let v = (0..3).map(|x| x * 2).collect();\n    let _ = v;\n}
+m13_rc_entre_threads | E0277 | use std::rc::Rc;\nfn main() {\n    let r = Rc::new(1);\n    std::thread::spawn(move || println!("{r}"));\n}

@@ -1,0 +1,8 @@
+[package]
+name = "base"
+version = "0.1.0"
+edition = "2024"
+
+# Exemples des modules qui n'utilisent que la bibliothèque standard.
+# Un fichier de src/bin par bloc de code du cours.
+[dependencies]
